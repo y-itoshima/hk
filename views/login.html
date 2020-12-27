@@ -1,0 +1,22 @@
+<html>
+  <body>
+　　<h2>家事TODOアプリログインページ</h2>
+    <br>
+　  <form action="/loginSend" method="POST">
+    メールアドレス：<input type="text" name="mail" >
+    <br>
+    パスワード    ：<input type="text" name="password">
+    <br>
+    <br>
+    <input type="submit" value="ログイン" >
+    </form>
+
+    <script>      
+      if ('' != '<%= err %>') {
+        alert('<%= err %>');      
+      }    
+    </script>
+
+  </body>
+</html>
+

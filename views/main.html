@@ -1,0 +1,170 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>家事シェアアプリ</title>
+    <meta name="description" content="ダッシュボード">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.3.1.js">
+    </script>
+
+    <script> 
+    //AjaxからNodeへ
+    function func1( weight,kajiID ){
+      let others =(weight === "その他" ? $("#others" + kajiID).val() : "");
+      console.log(others);
+      $.ajax({
+        url:'http://localhost:8001/insertDaily',
+        type:'POST',
+        data: {"weight" :weight, "kajiID" :kajiID,"others" :others},
+        dataType: 'json'
+      })
+      .done(function(data){
+        let dailyList =　JSON.stringify(data);
+        //ブロック変数　{}ここだけ
+        makeDaily(dailyList);   
+        updateStatus();
+      })
+  
+  
+        //→同じ形式で、今持ってきたJSON data持ってくる
+        //今ejsで展開しているのと似ている
+        //対応済み家事一覧を作るのは、$function スクリプトで埋め込んでやる(append)
+        //あるJSONを受け取った時に、埋め込む
+        //updateStatus(); と、JSONから
+
+      .fail(function(a,b,c){
+        console.log(a);
+        console.log(b);
+        console.log(c);
+
+        alert('記録に失敗しました。リロードしてください。' + weight + kajiID);
+      })    
+    } 
+    //新しいファンクション作って、Successの時と、Onloadの時(したの＄)に呼ぶ
+    function makeDaily(dailyList){
+      if( dailyList ){
+        console.log(dailyList);
+        let list = JSON.parse(dailyList);//連想配列に変えている
+        $('#dailyList').empty();
+        for ( let i = 0; i < list.length; i++ ){
+          let rec = list[i];
+          //console.log(rec['家事ID']);
+          let weight = rec['ウエイト'];
+          weight += (rec['ウエイト'] === "その他" ? "(" + rec['文言'] + ")"  : "");
+          $('#dailyList').append(
+            '<div class="row">' + 
+              '<div class="col-md-3">' + rec['家事名'] + '</div>' +   
+              '<div class="col-md-3">' + weight + '</div>' +   
+              '<div class="col-md-3">' + rec['ニックネーム'] + '</div>' +   
+              '<div class="col-md-3" id="daily_'+ rec['家事ID'] +'">' + rec['家事ID'] + '</div>' +   
+            '</div>'  
+          );
+        }　
+      }
+    }
+    function updateStatus(){
+      let doneList = $('div[id^="daily_"]');
+      //このidのタグがとってこれる
+      for ( let i = 0; i < doneList.length; i++ ){
+        //デイリー(対応済み)の家事IDを以下で取得
+        let kajiID = doneList[i].innerHTML;
+    　　　
+        //タグとタグに囲まれた値を取得する時に、jQueryだと、.textで取得する
+        $("#master_" + kajiID).css('background-color', 'gray');
+      }
+    }
+
+
+    
+    </script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body {
+        padding-top: 50px;
+        background-color: lightgray;
+      }
+
+      .starter-template {
+        padding: 40px 15px;
+        background-color: white;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="col-sm-12">
+        <h1><%= name %>さんお疲れ様です！</h1>
+        <!-- あなたのメールアドレスは、<%= email %>です。-->
+        <input type="hidden" id="email" value="<%= email %>">
+        <input type="hidden" id="name" value="<%= name %>">
+      </div>
+    </div>
+
+    <br>
+　　 
+    <!-- ここに月日曜日入れる　-->
+    <h3>本日のルーティン家事一覧</h3>
+    <div class="container">
+      <div class="starter-template"> 
+        <% for(let i = 0; i < houseworkList.length; i++ ){ %>
+          <% let kajiID = houseworkList[i]["No"] %>
+          <% let test_hk_name = houseworkList[i]["家事名"] %>
+          <div class="row" id="master_<%= kajiID %>">
+            <div class="col-sm-3">   
+              <%= houseworkList[i]['家事名'] %>
+            </div>
+         
+            <div class="col-sm-1">
+              <input type="button" value="軽め" class="btn btn-success" onclick="func1('軽め','<%= kajiID %>')">
+            </div>
+
+            <div class="col-sm-1">       
+              <button class="btn btn-warning" onclick="func1('普通','<%= kajiID %>')">普通</button>
+            </div>
+            
+            <div class="col-sm-1">
+              <button class="btn btn-danger" onclick="func1('丁寧','<%= kajiID %>')">丁寧</button>
+            </div>
+          
+            <div class="col-sm-3">
+              <button class="btn btn-default" onclick="func1('その他','<%= kajiID %>')">その他</button><input type="text" id="others<%= kajiID %>" >
+            </div>           
+          </div>      
+        <% } %>        
+      </div>
+    </div>
+    <hr>
+    
+    <!-- ここに月日曜日入れる　-->
+    <h3>対応済み家事一覧</h3>
+    <div class="container">
+      <div class="starter-template" id="dailyList" name="test">
+        <div class="row">
+
+        </div>            
+      </div>
+    </div>
+
+    <script>
+      $(function(){ //window.onload
+        let listA = '<%- dailyList %>';
+        makeDaily(listA);
+        updateStatus();
+      })
+      //作るときは、updatestatusコメントアウトする、makeDailyうまくいったら、外す。ボタン押した時に、両方呼ぶ
+        //updateStatus();
+        //insertDaily（GAS）を直して、きちんと出力できるようにする。
+      
+ 
+  
+    </script>
+  </body>
+</html>
+
