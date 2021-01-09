@@ -1,22 +1,80 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>シェアカジ</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <style>
+  body {
+    padding-top: 50px;
+    background-color: #4682B4;
+    margin-right: auto;
+    margin-left : auto;
+  }
+  .card {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px; 
+    padding-right: 20px; 
+    background-color: #ffffff;
+  }
+  
+  img {
+  width: 300px;
+  max-width: 100%;
+  }
+
+  </style>
+  
   <body>
-　　<h2>家事TODOアプリログインページ</h2>
-    <br>
-　  <form action="/loginSend" method="POST">
-    メールアドレス：<input type="text" name="mail" >
-    <br>
-    パスワード    ：<input type="text" name="password">
-    <br>
-    <br>
-    <input type="submit" value="ログイン" >
-    </form>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+          <div style="text-align:center;">
+            <img src="/img/share_kaji_logo.jpg" alt="logo">
+          </div>
+          <h3>ログイン</h3>
+          <form action="/loginSend" method="POST" name="form">　   
+            <div class="form-group">
+              <label for="mail">メールアドレス</label><br>
+              <input type="text" name="mail" class="form-control">
+            </div>
 
-    <script>      
+            <br>
+            
+            <div class="form-group">
+              <label for=""password">パスワード　　</label><br>
+              <input type=""password" name=""password" class="form-control">
+            </div>
+    
+            <div style="text-align:center;">
+              <bottun class="btn btn-primary" onclick="submit();">ログイン</bottun>
+              <div class ="login_reminder"><a href="/reminder">パスワードをお忘れの方</a></div> 
+           </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      
+    <br>
+    <br>
+    
+
+    <script> 
       if ('' != '<%= err %>') {
-        alert('<%= err %>');      
-      }    
+        alert('正しくございません'); 
+      } 
+      function submit(){
+        document.form.submit();    
+      }
     </script>
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>
 </html>
 
