@@ -22,6 +22,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('assets'));
 
 
 //セッションを利用することを宣言
