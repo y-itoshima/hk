@@ -77,10 +77,6 @@ $ sudo firewall-cmd --reload<br> 　
 $ npm install<br> 　
 $ node server.js<br> 　
 
-# Minimal Example
-
-![Minimal Example](resources/file-0.png)
-
 # Contributors
 
 - https://github.com/y-itoshima
