@@ -85,13 +85,18 @@
 
     <style>
       body {
-        padding-top: 50px;
-        background-color: lightgray;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #4682B4;
+
       }
 
       .starter-template {
-        padding: 40px 15px;
-        background-color: white;
+        padding-top: 20px; 
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 20px;
+        background-color: #FFFFFF;
       }
     </style>
 
@@ -100,42 +105,49 @@
   <body>
     <div class="container">
       <div class="col-sm-12">
-        <h1><%= name %>さんお疲れ様です！</h1>
+        <h3 style="color: #FFFFFF"><%= name %>さんお疲れ様です！</h3>
         <!-- あなたのメールアドレスは、<%= email %>です。-->
         <input type="hidden" id="email" value="<%= email %>">
         <input type="hidden" id="name" value="<%= name %>">
       </div>
     </div>
-
-    <br>
-　　 
     <!-- ここに月日曜日入れる　-->
-    <h3>本日のルーティン家事一覧</h3>
     <div class="container">
+      <h4 style="color: #FFFFFF">本日のルーティン家事一覧</h4>
       <div class="starter-template"> 
         <% for(let i = 0; i < houseworkList.length; i++ ){ %>
           <% let kajiID = houseworkList[i]["No"] %>
           <% let test_hk_name = houseworkList[i]["家事名"] %>
-          <div class="row" id="master_<%= kajiID %>">
-            <div class="col-sm-3">   
-              <%= houseworkList[i]['家事名'] %>
-            </div>
-         
-            <div class="col-sm-1">
-              <input type="button" value="軽め" class="btn btn-success" onclick="func1('軽め','<%= kajiID %>')">
+          <div id="master_<%= kajiID %>" style="margin-bottom:10px;">
+            <div class="row">
+              <div class="col-xs-12" style="font-size: 20px;">   
+                <%= houseworkList[i]['家事名'] %>
+              </div>
             </div>
 
-            <div class="col-sm-1">       
-              <button class="btn btn-warning" onclick="func1('普通','<%= kajiID %>')">普通</button>
+            <div class="row">
+              <div class="col-xs-2">
+                <input type="button" value="軽め" class="btn btn-success" onclick="func1('軽め','<%= kajiID %>')">
+              </div>
+
+              <div class="col-xs-2">       
+                <button class="btn btn-warning" onclick="func1('普通','<%= kajiID %>')">普通</button>
+              </div>
+            
+              <div class="col-xs-2">
+                <button class="btn btn-danger" onclick="func1('丁寧','<%= kajiID %>')">丁寧</button>
+              </div>
+     
             </div>
             
-            <div class="col-sm-1">
-              <button class="btn btn-danger" onclick="func1('丁寧','<%= kajiID %>')">丁寧</button>
+            <div class="row">
+              <div class="col-xs-2" style="width:70px;">
+                <button class="btn btn-default" onclick="func1('その他','<%= kajiID %>')">その他</button>
+              </div>  
+              <div class="col-xs-6">
+              	<input type="text" class="form-control" id="others<%= kajiID %>" >
+              </div> 
             </div>
-          
-            <div class="col-sm-3">
-              <button class="btn btn-default" onclick="func1('その他','<%= kajiID %>')">その他</button><input type="text" id="others<%= kajiID %>" >
-            </div>           
           </div>      
         <% } %>        
       </div>
@@ -143,8 +155,8 @@
     <hr>
     
     <!-- ここに月日曜日入れる　-->
-    <h3>対応済み家事一覧</h3>
     <div class="container">
+      <h4 style="color: #FFFFFF">対応済み家事一覧</h4>
       <div class="starter-template" id="dailyList" name="test">
         <div class="row">
 
@@ -162,8 +174,6 @@
         //updateStatus();
         //insertDaily（GAS）を直して、きちんと出力できるようにする。
       
- 
-  
     </script>
   </body>
 </html>
