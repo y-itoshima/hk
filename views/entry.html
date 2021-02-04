@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>シェアカジ</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+      function check(){
+        let name = document.getElementById("displayName");
+        let message ="";
+        if (name.value == "") {
+          message +=  "表示名をご記入ください。\n";    
+        }
+
+        let age = document.getElementById("age");
+        if (age.value == ""){
+          message +=  "年齢を入力してください。非公開です。\n";    
+        }
+        if(isNaN(age.value)){
+          message +=  "年齢は半角英数字で入力してください。\n"; 
+        }
+
+        let male = document.getElementById("male");
+        let female = document.getElementById("female");
+        let unselected = document.getElementById("unselected");
+        let gender = "";
+        if ( male.checked ){
+          gender = "男";
+        } else if( female.checked ) {
+          gender = "女";
+        } else if( unselected.checked ) {
+          gender = "指定しない"
+        }        
+        if ( gender === ""){
+          message +=  "性別欄をご確認ください。\n";    
+        }
+
+        let mail = document.getElementById("mail");
+        let regMail = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
+        if ( mail.value === "" ){
+          message += "メールアドレスをご記入ください。\n"
+        } else if ( regMail.test(mail) ){
+          message += "メールアドレスの形式をご確認ください。\n"
+        } 
+
+        let password = document.getElementById("password");
+        let regPass = /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,15}$/;
+        if ( password.value === "" ){
+          message += "パスワードをご記入ください。\n"
+        } else if ( regPass.test(password) ){
+          message += "パスワードの形式をご確認ください。\n"
+        } 
+
+        if ( message == "" ){
+          alert("認証メールを送りました。ご確認くださいませ。");
+          return true;
+        } else {
+          alert( message );
+          return false;
+        }
+      }
+    </script>
+
+
+  </head>
+
+  <style>
+  body {
+    padding-top: 50px;
+    background-color: #4682B4;
+    margin-right: auto;
+    margin-left : auto;
+  }
+  .card {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 70px; 
+    padding-right: 70px; 
+    background-color: #ffffff;
+  }
+  </style>
+  
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-body">
+
+
+          <h3>新規登録フォーム</h3>
+          <br>
+          <form action="/entry" method="POST" name="form" class="form-horizontal">
+            <div class="form-group">
+              <label for="displayName">表示名 ※8文字以内</label><br>
+              <input type="text" id="displayName" name="displayName" class="form-control" required maxlength="8" size="8">
+              <br>
+
+              <label for="age">年齢 ※公開されません</label><br>
+              <input type="text" id="age" name="age" class="form-control" required maxlength="3" size="3">
+              <br>
+
+              <label for="gender">性別</label><br>
+                <div class="radio">
+                  <input id="female" type="radio" name="gender" value="f" class="form-control">
+                  <label for="female">女性</label>
+                </div>
+                <br>
+                <div class="radio">
+                  <input id="male" type="radio" name="gender" value="m" class="form-control">
+                  <label for="male">男性</label>
+                </div>
+                <br>
+                <div class="radio">
+                  <input id="unselected" type="radio" name="gender" value="n" class="form-control">
+                  <label for="unselected">指定しない</label>
+                </div>
+              <br>
+              <br>
+              
+              <label for="mail">メールアドレス</label>
+              <br>
+              <input type="text" id="mail" name="mail" class="form-control" required maxlength="30">
+              <br>
+              <label for="password">パスワード　※半角/全角英字、数字含むを8字以上</label>
+              <br>
+              <input type="password" id="password" name="password" class="form-control" required maxlength="15">
+              <br>
+              <br>
+
+              <div style="text-align:center;">
+                <bottun class="btn btn-primary" onclick="check();">送信</bottun>
+              </div> 
+            </div>   
+          </form>
+
+        </div>
+      </div>
+    </div>
+      
+    <br>
+    <br>    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
