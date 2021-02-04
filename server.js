@@ -142,6 +142,9 @@ app.post('/insertDaily', function (req, res) {
   });
 });
 
+app.get('/entry', function (req, res) {
+  res.render('entry.html', {err:""});  
+});
 
 app.get('/login', function (req, res) {
   //先にセッションをクリアしてから、レンダリングする
