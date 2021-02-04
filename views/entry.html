@@ -55,7 +55,7 @@
         } 
 
         if ( message == "" ){
-          alert("認証メールを送りました。ご確認くださいませ。");
+          alert("新規作成に成功しました！ログインページより、ログインしてください。");
           return true;
         } else {
           alert( message );
@@ -63,8 +63,6 @@
         }
       }
     </script>
-
-
   </head>
 
   <style>
@@ -81,6 +79,40 @@
     padding-right: 70px; 
     background-color: #ffffff;
   }
+
+  .radio-input{
+    display: none;
+　}
+　.radio-input + label{
+    padding-left: 40px;
+    position:relative;
+    margin-right: 20px;
+  }
+  .radio-input + label::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #999;
+    border-radius: 50%;
+  }
+  .radio-input:checked + label{
+    color: #d01137;
+  }
+  .radio-input:checked + label::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 11px;
+    height: 11px;
+    background: #d01137;
+    border-radius: 50%;
+  }
   </style>
   
   <body>
@@ -88,11 +120,12 @@
       <div class="card">
         <div class="card-body">
 
-
-          <h3>新規登録フォーム</h3>
-          <br>
+　　　　　　<!-- <form action="/loginSend" method="POST" name="form">　--> 
+　
           <form action="/entry" method="POST" name="form" class="form-horizontal">
             <div class="form-group">
+              <h3>スタートの準備</h3>
+              <br>
               <label for="displayName">表示名 ※8文字以内</label><br>
               <input type="text" id="displayName" name="displayName" class="form-control" required maxlength="8" size="8">
               <br>
@@ -103,17 +136,17 @@
 
               <label for="gender">性別</label><br>
                 <div class="radio">
-                  <input id="female" type="radio" name="gender" value="f" class="form-control">
+                  <input id="female" type="radio" name="gender" value="f">
                   <label for="female">女性</label>
                 </div>
                 <br>
                 <div class="radio">
-                  <input id="male" type="radio" name="gender" value="m" class="form-control">
+                  <input id="male" type="radio" name="gender" value="m">
                   <label for="male">男性</label>
                 </div>
                 <br>
                 <div class="radio">
-                  <input id="unselected" type="radio" name="gender" value="n" class="form-control">
+                  <input id="unselected" type="radio" name="gender" value="n">
                   <label for="unselected">指定しない</label>
                 </div>
               <br>
@@ -132,6 +165,16 @@
               <div style="text-align:center;">
                 <bottun class="btn btn-primary" onclick="check();">送信</bottun>
               </div> 
+<!-- 
+    <script> 
+      if ('' != '<%= err %>') {
+        alert('正しくございません'); 
+      } 
+      function submit(){
+        document.form.submit();    
+      }
+    </script>
+-->    
             </div>   
           </form>
 
@@ -146,4 +189,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>
 </html>
+
 
