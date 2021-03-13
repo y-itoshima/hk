@@ -1,0 +1,5 @@
+//環境変数(本番)
+{
+  "BASE_URL":"https://share-kaji.com/" 
+}
+

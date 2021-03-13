@@ -15,7 +15,7 @@
       let others =(weight === "その他" ? $("#others" + kajiID).val() : "");
       console.log(others);
       $.ajax({
-        url:'https://share-kaji.com/insertDaily',
+        url:'<%= insertURL %>',
         type:'POST',
         data: {"weight" :weight, "kajiID" :kajiID,"others" :others},
         dataType: 'json'

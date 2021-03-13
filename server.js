@@ -3,6 +3,7 @@ const express = require('express')
 const session = require('express-session');
 const request = require('request');
 const dateformat = require('dateformat');
+const config = require("config");
 
 //セッションを利用するための変数
 const sess = {
@@ -105,7 +106,8 @@ app.get('/main', function (req, res) {
           name: req.session.name,
           houseworkList: results[0],
           dairyList: results[1],
-          dailyList: JSON.stringify(results[1])
+          dailyList: JSON.stringify(results[1]),
+          insertURL: config.BASE_URL + 'insertDaily' 
         }
       );
     });
